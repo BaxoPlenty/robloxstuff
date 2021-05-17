@@ -37,7 +37,7 @@ function Library.NewWindow(Name)
   
   local Background = Instance.new("Frame", ScreenGui)
   Background.BackgroundColor3 = Theme["MainBackground"]
-  Background.Size = UDim2.new(0.475, 0, 0.545, 0)
+  Background.Size = UDim2.new(0.415, 0, 0.450, 0)
   Background.Position = UDim2.new(0, 50, 0, 50)
   Background.BorderSizePixel = 0
 
