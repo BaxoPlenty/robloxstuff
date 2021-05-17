@@ -3,6 +3,9 @@
 local Library = {}
 Library.__index = Library
 
+local Window = {}
+Wab.__index = Wab
+
 local Theme = {
   ["MainBackground"] = Color3.fromRGB(25, 26, 32)
 }
@@ -29,11 +32,18 @@ end
 
 --// UI Library \\--
 
--- NewWindow(<string> Name)
+-- Window.Test() // Testing
+
+function Window.Test()
+    print("WORK!")
+end
+
+-- <Window> Libary.NewWindow(<string> Name)
 
 function Library.NewWindow(Name)
   local ScreenGui = Instance.new("ScreenGui", game.CoreGui) -- Use CoreGui so it doesn't overlap with existing stuff.
   ScreenGui.ResetOnSpawn = false
+  ScreenGui.Name = "BlueUI_" .. Name
   
   local Background = Instance.new("Frame", ScreenGui)
   Background.BackgroundColor3 = Theme["MainBackground"]
@@ -42,6 +52,8 @@ function Library.NewWindow(Name)
   Background.BorderSizePixel = 0
 
   ORoundElement(Background, 3)
+
+  return setmetatable({ WindowName = Name, WindowUIObject = ScreenGui }, Window)
 end
 
 --// Finish up \\--
