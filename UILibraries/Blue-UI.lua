@@ -43,3 +43,7 @@ function Library.NewWindow(Name)
 
   ORoundElement(Background, 3)
 end
+
+--// Finish up \\--
+
+return Library
