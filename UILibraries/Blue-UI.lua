@@ -4,7 +4,7 @@ local Library = {}
 Library.__index = Library
 
 local Window = {}
-Wab.__index = Wab
+Window.__index = Window
 
 local Theme = {
   ["MainBackground"] = Color3.fromRGB(25, 26, 32)
