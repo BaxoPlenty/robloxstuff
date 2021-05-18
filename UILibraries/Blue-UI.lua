@@ -76,10 +76,10 @@ end
 
 -- Window.Destroy()
 
-function Window.Destroy(this)
-  this.WindowUIObject:Destroy()
+function Window.Destroy(self)
+  self.WindowUIObject:Destroy()
   
-  setmetatable(this, nil)
+  setmetatable(self, nil)
 end
 
 -- Window.Toggle()
