@@ -146,7 +146,7 @@ function Library.NewWindow(Name)
   BackgroundContent.Size = UDim2.new(1, 0, 1,0)
 
   --// Sidebar Creation \\--
-
+print("sidebar")
   local Sidebar = Instance.new("Frame", BackgroundContent)
   Sidebar.Name = "Sidebar"
   Sidebar.BackgroundColor3 = Theme["SidebarColor"]
@@ -154,12 +154,14 @@ function Library.NewWindow(Name)
   Sidebar.Size = UDim2.new(0.095, 0, 1,0)
 
   ORoundElement(Sidebar, 3)
+  print("tabs")
   
   local STabs = Instance.new("Frame", Sidebar)
   STabs.Name = "Tabs"
   STabs.BackgroundTransparency = 1
   STabs.BorderSizePixel = 0
   STabs.Size = UDim2.new(1, 0, 1,0)
+  print("unround")
 
   local SidebarUnround1 = TabUnround:Clone()
   SidebarUnround1.Parent = Sidebar
@@ -173,12 +175,12 @@ function Library.NewWindow(Name)
   SidebarUnround2.Size = UDim2.new(-0.06, 0, -0.06)
 
   --// TabContent Creation \\--
-
+print("tabcontent")
   local TabContent = Instance.new("Frame", BackgroundContent)
   TabContent.Name = "TabContent"
   TabContent.BackgroundTransparency = 1
   TabContent.BorderSizePixel = 0
-  TabContent.Size = UDim2.new(0.905, 0, 1,0)
+  TabContent.Size = UDim2.new(0.905, 0, 1, 0)
   TabContent.Position = UDim2.new(0.095, 0, 0, 0)
 
   --// Return the window \\--
