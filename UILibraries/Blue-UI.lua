@@ -163,10 +163,11 @@ print("sidebar")
   STabs.Size = UDim2.new(1, 0, 1,0)
   print("unround")
 
-  local SidebarUnround1 = TabUnround:Clone()
-  SidebarUnround1.Parent = Sidebar
+  local SidebarUnround1 = Instance.new("Frame", Sidebar)
+  SidebarUnround1.BackgroundTransparency = 1
   SidebarUnround1.Size = UDim2.new(-0.06, 0, 0.06, 0)
   SidebarUnround1.Position = UDim2.new(1, 0, 0, 0)
+  SidebarUnround1.BorderSizePixel = 0
   SidebarUnround1.BackgroundColor3 = Theme["SidebarColor"]
   SidebarUnround1.Name = "Unround"
   print("unround1")
