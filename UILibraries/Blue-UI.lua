@@ -98,6 +98,7 @@ function Library.NewWindow(Name)
   Background.Size = UDim2.new(1, 0, 1, 0)
   Background.BorderSizePixel = 0
   Background.ZIndex = 2
+  Background.Name = "Background"
 
   ORoundElement(Background, 3)
 
@@ -105,6 +106,7 @@ function Library.NewWindow(Name)
   TopGradient.Size = UDim2.new(1, 0, 0.02, 0)
   TopGradient.Position = UDim2.new(0, 0, -0.01, 0)
   TopGradient.BorderSizePixel = 0
+  TopGradient.Name = "TopGradient"
 
   SRoundElement(TopGradient, 1)
   Gradient(TopGradient, Theme["TopGradient"].From, Theme["TopGradient"].To, 0)
