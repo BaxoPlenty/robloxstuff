@@ -77,7 +77,8 @@ end
 -- Window.Destroy()
 
 function Window.Destroy()
-  self.WindowUIObject:Destroy()
+ print(self)
+ self.WindowUIObject:Destroy()
   print(self)
   
   setmetatable(self, nil)
