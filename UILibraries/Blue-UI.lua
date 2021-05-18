@@ -77,16 +77,16 @@ end
 -- Window.Destroy()
 
 function Window.Destroy()
-  Window.WindowUIObject:Destroy()
+  self.WindowUIObject:Destroy()
   
-  setmetatable(Window, nil)
+  setmetatable(self, nil)
 end
 
 -- Window.Toggle()
 
 function Window.Toggle()
-  Window.WindowUIObject.Enabled = not Window.Toggled
-  Window.Toggled = not Window.Toggled
+  self.WindowUIObject.Enabled = not self.Toggled
+  self.Toggled = not self.Toggled
 end
 
 -- <Window> Libary.NewWindow(<string> Name)
@@ -146,7 +146,7 @@ function Library.NewWindow(Name)
   BackgroundContent.Size = UDim2.new(1, 0, 1,0)
 
   --// Sidebar Creation \\--
-print("sidebar")
+
   local Sidebar = Instance.new("Frame", BackgroundContent)
   Sidebar.Name = "Sidebar"
   Sidebar.BackgroundColor3 = Theme["SidebarColor"]
@@ -154,30 +154,29 @@ print("sidebar")
   Sidebar.Size = UDim2.new(0.095, 0, 1,0)
 
   ORoundElement(Sidebar, 3)
-  print("tabs")
   
   local STabs = Instance.new("Frame", Sidebar)
   STabs.Name = "Tabs"
   STabs.BackgroundTransparency = 1
   STabs.BorderSizePixel = 0
   STabs.Size = UDim2.new(1, 0, 1,0)
-  print("unround")
 
   local SidebarUnround1 = Instance.new("Frame", Sidebar)
-  SidebarUnround1.BackgroundTransparency = 1
   SidebarUnround1.Size = UDim2.new(-0.06, 0, 0.06, 0)
   SidebarUnround1.Position = UDim2.new(1, 0, 0, 0)
   SidebarUnround1.BorderSizePixel = 0
   SidebarUnround1.BackgroundColor3 = Theme["SidebarColor"]
   SidebarUnround1.Name = "Unround"
-  print("unround1")
 
-  local SidebarUnround2 = SidebarUnround1:Clone()
+  local SidebarUnround2 = Instance.new("Frame", Sidebar)
   SidebarUnround2.Position = UDim2.new(1, 0, 1, 0)
   SidebarUnround2.Size = UDim2.new(-0.06, 0, -0.06)
+  SidebarUnround2.BorderSizePixel = 0
+  SidebarUnround2.BackgroundColor3 = Theme["SidebarColor"]
+  SidebarUnround2.Name = "Unround"
 
   --// TabContent Creation \\--
-print("tabcontent")
+
   local TabContent = Instance.new("Frame", BackgroundContent)
   TabContent.Name = "TabContent"
   TabContent.BackgroundTransparency = 1
