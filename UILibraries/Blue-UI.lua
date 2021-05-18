@@ -74,15 +74,16 @@ end
 
 --// UI Library \\--
 
--- Window.Destroy()
+-- Window:Destroy()
 
 function Window:Destroy()
   self.WindowUIObject:Destroy()
   
+  self.__index = nil
   setmetatable(self, nil)
 end
 
--- Window.Toggle()
+-- Window:Toggle()
 
 function Window:Toggle()
   self.WindowUIObject.Enabled = not self.Toggled
@@ -113,7 +114,6 @@ function Library.NewWindow(Name)
   Background.BackgroundColor3 = Theme["MainBackground"]
   Background.Size = UDim2.new(1, 0, 1, 0)
   Background.BorderSizePixel = 0
-  Background.ZIndex = 2
   Background.Name = "Background"
 
   ORoundElement(Background, 3)
@@ -125,6 +125,7 @@ function Library.NewWindow(Name)
   TopGradient.Position = UDim2.new(0, 0, -0.01, 0)
   TopGradient.BorderSizePixel = 0
   TopGradient.Name = "TopGradient"
+  TopGradient.ZIndex = 0
 
   SRoundElement(TopGradient, 1)
   Gradient(TopGradient, Theme["TopGradient"].From, Theme["TopGradient"].To, 0)
