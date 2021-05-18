@@ -76,7 +76,7 @@ end
 
 -- Window.Destroy()
 
-function Window.Destroy(self)
+function Window:Destroy()
   self.WindowUIObject:Destroy()
   
   setmetatable(self, nil)
@@ -84,9 +84,9 @@ end
 
 -- Window.Toggle()
 
-function Window.Toggle(this)
-  this.WindowUIObject.Enabled = not this.Toggled
-  this.Toggled = not this.Toggled
+function Window:Toggle()
+  self.WindowUIObject.Enabled = not self.Toggled
+  self.Toggled = not self.Toggled
 end
 
 -- <Window> Libary.NewWindow(<string> Name)
