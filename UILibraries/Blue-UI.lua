@@ -97,6 +97,7 @@ function Library.NewWindow(Name)
   Background.BackgroundColor3 = Theme["MainBackground"]
   Background.Size = UDim2.new(1, 0, 1, 0)
   Background.BorderSizePixel = 0
+  Background.ZIndex = 2
 
   ORoundElement(Background, 3)
 
