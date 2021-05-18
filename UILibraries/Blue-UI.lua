@@ -169,6 +169,7 @@ print("sidebar")
   SidebarUnround1.Position = UDim2.new(1, 0, 0, 0)
   SidebarUnround1.BackgroundColor3 = Theme["SidebarColor"]
   SidebarUnround1.Name = "Unround"
+  print("unround1")
 
   local SidebarUnround2 = SidebarUnround1:Clone()
   SidebarUnround2.Position = UDim2.new(1, 0, 1, 0)
