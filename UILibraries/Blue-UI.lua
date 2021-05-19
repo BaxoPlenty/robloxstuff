@@ -169,7 +169,7 @@ function Library.NewWindow(Name)
   BottomContent.Position = UDim2.new(0, 0, 1, 0)
   BottomContent.Size = UDim2.new(1, 0, -0.15, 0)
 
-  local UserImage = Instance.new("Frame", BottomContent)
+  local UserImage = Instance.new("ImageLabel", BottomContent)
   UserImage.Name = "UserImage"
   UserImage.BackgroundTransparency = 1
   UserImage.BorderSizePixel = 0
