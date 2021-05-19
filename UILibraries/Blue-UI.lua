@@ -11,7 +11,7 @@ Created and scripted by BaxoPlenty
 
 Credits:
 
-- NoviHacks | Inspiration for the UI library
+- NoviHacks | Design inspiration for the UI library ( If you want a takedown, direct message me on discord: BaxoPlenty#0001 )
 
 Features:
 
@@ -161,6 +161,22 @@ function Library.NewWindow(Name)
   STabs.BackgroundTransparency = 1
   STabs.BorderSizePixel = 0
   STabs.Size = UDim2.new(1, 0, 1,0)
+
+  local BottomContent = Instance.new("Frame", STabs)
+  BottomContent.Name = "BottomContent"
+  BottomContent.BackgroundTransparency = 1
+  BottomContent.BorderSizePixel = 0
+  BottomContent.Position = UDim2.new(0, 0, 1, 0)
+  BottomContent.Size = UDim2.new(1, 0, -0.15, 0)
+
+  local UserImage = Instance.new("Frame", BottomContent)
+  UserImage.Name = "UserImage"
+  UserImage.BackgroundTransparency = 1
+  UserImage.BorderSizePixel = 0
+  UserImage.Position = UDim2.new(0.2, 0, 0.2, 0)
+  UserImage.Size = UDim2.new(0.6, 0, 0.6, 0)
+
+  SRoundElement(UserImage, 1)
 
   local SidebarUnround1 = Instance.new("Frame", Sidebar)
   SidebarUnround1.Size = UDim2.new(-0.06, 0, 0.06, 0)
