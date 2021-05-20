@@ -178,6 +178,7 @@ function Window:AddTab(TabName, TabIcon)
   Click.BackgroundTransparency = 1
   Click.Text = ""
   Click.Size = UDim2.new(1, 0, 1, 0)
+  Click.Name = "Click"
 
   if self.WindowCurrentTab == nil then
     Icon.ImageColor3 = Theme.Icon.Active
@@ -198,11 +199,11 @@ function Window:AddTab(TabName, TabIcon)
 
   Click.MouseButton1Click:Connect(function()
     if self.WindowCurrentTab ~= Holder then
-      print("clicked?")
       FadeIcon(Icon, Theme.Icon.Active)
       FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
 
       self.WindowCurrentTab = Holder
+      print(self.WindowCurrentTab.Name)
     end
   end)
 
