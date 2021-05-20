@@ -157,28 +157,13 @@ end
 -- Window:SelectTab(Tab)
 
 function Window:SelectTab(Tab)
-  print("trollage")
-  
-  if not Tab then
-    print("no tab")
-  end
-
-  if Tab:FindFirstChild("Icon") then
-    print("icon exists")
-  end
-
   FadeIcon(Tab.Icon, Theme.Icon.Active)
-  print("set1")
 
   if self.WindowCurrentTab ~= nil then
     FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
   end
 
-  print("set2")
-
   self.WindowCurrentTab = Tab
-
-  print("set3")
 end
 
 -- <Tab> Window:GetCurrentTab()
@@ -215,7 +200,6 @@ function Window:AddTab(TabName, TabIcon)
   Click.Name = "Click"
 
   if self:GetCurrentTab() == nil then
-    print("Setting1319813988131")
     self:SelectTab(Holder)
   end
 
