@@ -154,6 +154,15 @@ function Window:Toggle()
   self.Toggled = not self.Toggled
 end
 
+-- Window:SelectTab(Tab)
+
+function Window:SelectTab(Tab)
+  FadeIcon(Tab.Icon, Theme.Icon.Active)
+  FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
+
+  self.WindowCurrentTab = Tab
+end
+
 -- <Tab> Window:AddTab(TabName, TabIcon)
 
 function Window:AddTab(TabName, TabIcon)
@@ -199,11 +208,7 @@ function Window:AddTab(TabName, TabIcon)
 
   Click.MouseButton1Click:Connect(function()
     if self.WindowCurrentTab ~= Holder then
-      FadeIcon(Icon, Theme.Icon.Active)
-      FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
-
-      self.WindowCurrentTab = Holder
-      print(self.WindowCurrentTab.Name)
+      self:SelectTab(Holder)
     end
   end)
 
