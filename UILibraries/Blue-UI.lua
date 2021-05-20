@@ -175,6 +175,11 @@ end
 -- <Tab> Window:AddTab(TabName, TabIcon)
 
 function Window:AddTab(TabName, TabIcon)
+  if #self.Tabs == 6 then
+    warn("Reached the total of 6 Tabs.")
+    return
+  end
+
   local Holder = Instance.new("Frame", self.WindowTabHolder)
 
   Holder.Name = TabName
@@ -189,7 +194,7 @@ function Window:AddTab(TabName, TabIcon)
   Icon.BackgroundTransparency = 1
   Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
 
-  Icon.Image = "rbxassetid://" .. tostring(TabIcon)
+  Icon.Image = "http://www.roblox.com/asset/?id=" .. tostring(TabIcon)
   Icon.ImageColor3 = Theme.Icon.None
 
   local Click = Instance.new("TextButton", Holder)
