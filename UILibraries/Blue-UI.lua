@@ -15,12 +15,14 @@ Credits:
 
 Features:
 
-- Up to 5 total tabs
+- Up to 6 total tabs
 - Up to 3 sections per tab
 
 --]]
 
 --// Setup \\--
+
+local Players = game:GetService("Players")
 
 local Library = {}
 Library.__index = Library
@@ -38,6 +40,18 @@ local Theme = {
 }
 
 --// Utilities \\--
+
+-- GetHeadshotAvatar(<Player> Player)
+
+local function GetHeadshotAvatar(Player)
+  local UserId = Player.UserId
+  local Type = Enum.ThumbnailType.HeadShot
+  local Size = Enum.ThumbnailSize.Size100x100
+
+  local Content = Players:GetUserThumbnailAsync(UserId, Type, Size)
+
+  return Content
+end
 
 -- OffsetRoundElement | ORoundElement(<Instance> Element, <int> Radius)
 
@@ -60,16 +74,29 @@ end
 -- Gradient(<Instance> Element, <Color> From, <Color> To, <int> Rotation)
 
 local function Gradient(Element, From, To, Rotation)
-  local Gradient = Instance.new("UIGradient")
+  local gradient = Instance.new("UIGradient")
 
-  Gradient.Rotation = Rotation
-  Gradient.Color =
+  gradient.Rotation = Rotation
+  gradient.Color =
     ColorSequence.new {
     ColorSequenceKeypoint.new(0, From),
     ColorSequenceKeypoint.new(1, To)
   }
 
-  Gradient.Parent = Element
+  gradient.Parent = Element
+end
+
+-- GridLayout(<Instance> Element, <Enum> FillDirection, <int> MaxCells, <UDim2> CellSize, <UDim2> CellPadding)
+
+local function GridLayout(Element, FillDirection, MaxCells, CellSize, CellPadding)
+  local gridlayout = Instance.new("UIGridLayout")
+
+  gridlayout.FillDirectionMaxCells = MaxCells
+  gridlayout.CellSize = CellSize
+  gridlayout.FillDirection = FillDirection
+  gridlayout.CellPadding = CellPadding
+
+  gridlayout.Parent = Element
 end
 
 --// UI Library \\--
@@ -175,8 +202,17 @@ function Library.NewWindow(Name)
   UserImage.BorderSizePixel = 0
   UserImage.Position = UDim2.new(0.2, 0, 0.2, 0)
   UserImage.Size = UDim2.new(0.6, 0, 0.6, 0)
+  UserImage.Image = GetHeadshotAvatar(Players.LocalPlayer)
 
   SRoundElement(UserImage, 1)
+
+  local TopContent = Instance.new("Frame", STabs)
+  TopContent.Name = "TopContent"
+  TopContent.BackgroundTransparency = 1
+  TopContent.BorderSizePixel = 0
+  TopContent.Size = UDim2.new(1, 0, 0.85, 0)
+
+  GridLayout(TopContent, Enum.FillDirection.Horizontal, 6, UDim2.new(1, 0, 0.15, 0), UDim2.new(0, 0, 0, 0))
 
   local SidebarUnround1 = Instance.new("Frame", Sidebar)
   SidebarUnround1.Size = UDim2.new(-0.06, 0, 0.06, 0)
