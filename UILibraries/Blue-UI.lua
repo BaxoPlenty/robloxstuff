@@ -23,12 +23,16 @@ Features:
 --// Setup \\--
 
 local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
 
 local Library = {}
 Library.__index = Library
 
 local Window = {}
 Window.__index = Window
+
+local Tab = {}
+Tab.__index = Tab
 
 local Theme = {
   ["MainBackground"] = Color3.fromRGB(28, 28, 35),
@@ -39,7 +43,7 @@ local Theme = {
   },
   ["Tab"] = {
     ["Active"] = Color3.fromRGB(28, 28, 35),
-    ["None"] = Color3.fromRGB(27, 42, 53)
+    ["None"] = Color3.fromRGB(27, 26, 32)
   },
   ["Icon"] = {
     ["Hovered"] = Color3.fromRGB(122, 126, 136),
@@ -108,6 +112,30 @@ local function GridLayout(Element, FillDirection, MaxCells, CellSize, CellPaddin
   gridlayout.Parent = Element
 end
 
+-- FadeIcon(<Instance> Icon, <Color3> Color)
+
+local function FadeIcon(Icon, Color)
+  local Information = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, false, 0)
+
+	local Properties = {
+		ImageColor3 = Color
+	}
+
+	TweenService:Create(Icon, Information, Properties):Play()
+end
+
+-- FadeFrame(<Instance> Frame, <Color3> Color)
+
+local function FadeFrame(Frame, Color)
+	local Information = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, false, 0)
+
+	local Properties = {
+		BackgroundColor3 = Color
+	}
+
+	TweenService:Create(Frame, Information, Properties):Play()
+end
+
 --// UI Library \\--
 
 -- Window:Destroy()
@@ -150,6 +178,34 @@ function Window:AddTab(TabName, TabIcon)
   Click.BackgroundTransparency = 1
   Click.Text = ""
   Click.Size = UDim2.new(1, 0, 1, 0)
+
+  if self.WindowCurrentTab == nil then
+    Icon.ImageColor3 = Theme.Icon.Active
+    self.WindowCurrentTab = Holder
+  end
+
+  Holder.MouseEnter:Connect(function()
+    if self.WindowCurrentTab ~= Holder then
+      FadeIcon(Icon, Theme.Icon.Hovered)
+    end
+  end)
+
+  Holder.MouseLeave:Connect(function()
+    if self.WindowCurrentTab ~= Holder then
+      FadeIcon(Icon, Theme.Icon.None)
+    end
+  end)
+
+  Click.MouseButton1Click:Connect(function()
+    if self.WindowCurrentTab ~= Holder then
+      FadeIcon(Icon, Theme.Icon.Active)
+      FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
+
+      self.WindowCurrentTab = Holder
+    end
+  end)
+
+  return setmetatable({ Window = self, Elements = {} }, Tab)
 end
 
 -- <Window> Libary.NewWindow(<string> Name)
@@ -274,7 +330,7 @@ function Library.NewWindow(Name)
 
   --// Return the window \\--
 
-  return setmetatable( { WindowName = Name, WindowUIObject = ScreenGui, WindowTabHolder = TopContent, WindowTabContent = TabContent, WindowCurrentTab = nil, Toggled = true }, Window)
+  return setmetatable( { WindowName = Name, WindowUIObject = ScreenGui, WindowTabHolder = TopContent, WindowTabContent = TabContent, WindowCurrentTab = nil, Toggled = true, Tabs = {} }, Window)
 end
 
 --// Finish up \\--
