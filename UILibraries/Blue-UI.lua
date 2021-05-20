@@ -173,7 +173,7 @@ function Window:AddTab(TabName, TabIcon)
   Icon.Image = "rbxassetid://" .. tostring(TabIcon)
   Icon.ImageColor3 = Theme.Icon.None
 
-  local Click = Instance.new("TextButton")
+  local Click = Instance.new("TextButton", Holder)
 
   Click.BackgroundTransparency = 1
   Click.Text = ""
