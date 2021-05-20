@@ -198,6 +198,7 @@ function Window:AddTab(TabName, TabIcon)
 
   Click.MouseButton1Click:Connect(function()
     if self.WindowCurrentTab ~= Holder then
+      print("clicked?")
       FadeIcon(Icon, Theme.Icon.Active)
       FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
 
@@ -205,7 +206,10 @@ function Window:AddTab(TabName, TabIcon)
     end
   end)
 
-  return setmetatable({ Window = self, Elements = {} }, Tab)
+  local NewTab = setmetatable({ Window = self, Elements = {} }, Tab)
+
+  table.insert(self.Tabs, nil, NewTab)
+  return NewTab
 end
 
 -- <Window> Libary.NewWindow(<string> Name)
