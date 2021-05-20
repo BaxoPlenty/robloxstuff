@@ -36,6 +36,15 @@ local Theme = {
   ["TopGradient"] = {
     ["From"] = Color3.fromRGB(14, 116, 164),
     ["To"] = Color3.fromRGB(126, 77, 234)
+  },
+  ["Tab"] = {
+    ["Active"] = Color3.fromRGB(28, 28, 35),
+    ["None"] = Color3.fromRGB(27, 42, 53)
+  },
+  ["Icon"] = {
+    ["Hovered"] = Color3.fromRGB(122, 126, 136),
+    ["Active"] = Color3.fromRGB(122, 126, 136),
+    ["None"] = Color3.fromRGB(60, 59, 67)
   }
 }
 
@@ -117,6 +126,32 @@ function Window:Toggle()
   self.Toggled = not self.Toggled
 end
 
+-- <Tab> Window:AddTab(TabName, TabIcon)
+
+function Window:AddTab(TabName, TabIcon)
+  local Holder = Instance.new("Frame", self.WindowTabHolder)
+
+  Holder.Name = TabName
+  Holder.BorderSizePixel = 0
+  Holder.BackgroundColor3 = Theme.Tab.None
+
+  local Icon = Instance.new("ImageLabel", Holder)
+  
+  Icon.Position = UDim2.new(0.25, 0, 0.2, 0)
+  Icon.Size = UDim2.new(0.6, 0, 0.6, 0)
+  Icon.BackgroundTransparency = 1
+  Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
+
+  Icon.Image = "rbxassetid://" .. tostring(TabIcon)
+  Icon.ImageColor3 = Theme.Icon.None
+
+  local Click = Instance.new("TextButton")
+
+  Click.BackgroundTransparency = 1
+  Click.Text = ""
+  Click.Size = UDim2.new(1, 0, 1, 0)
+end
+
 -- <Window> Libary.NewWindow(<string> Name)
 
 function Library.NewWindow(Name)
@@ -138,7 +173,7 @@ function Library.NewWindow(Name)
   --// Background Creation \\--
 
   local Background = Instance.new("Frame", UIHolder)
-  Background.BackgroundColor3 = Theme["MainBackground"]
+  Background.BackgroundColor3 = Theme.MainBackground
   Background.Size = UDim2.new(1, 0, 1, 0)
   Background.BorderSizePixel = 0
   Background.Name = "Background"
@@ -155,14 +190,14 @@ function Library.NewWindow(Name)
   TopGradient.ZIndex = 0
 
   SRoundElement(TopGradient, 1)
-  Gradient(TopGradient, Theme["TopGradient"].From, Theme["TopGradient"].To, 0)
+  Gradient(TopGradient, Theme.TopGradient.From, Theme.TopGradient.To, 0)
 
   --// TopUnround Creation \\--
 
   local TopUnround = Instance.new("Frame", Background)
   TopUnround.Size = UDim2.new(1, 0, 0.06, 0)
   TopUnround.BorderSizePixel = 0
-  TopUnround.BackgroundColor3 = Theme["MainBackground"]
+  TopUnround.BackgroundColor3 = Theme.MainBackground
   TopUnround.Name = "TopUnround"
 
   --// Background content Creation \\--
@@ -177,7 +212,7 @@ function Library.NewWindow(Name)
 
   local Sidebar = Instance.new("Frame", BackgroundContent)
   Sidebar.Name = "Sidebar"
-  Sidebar.BackgroundColor3 = Theme["SidebarColor"]
+  Sidebar.BackgroundColor3 = Theme.SidebarColor
   Sidebar.BorderSizePixel = 0
   Sidebar.Size = UDim2.new(0.095, 0, 1,0)
 
@@ -218,14 +253,14 @@ function Library.NewWindow(Name)
   SidebarUnround1.Size = UDim2.new(-0.06, 0, 0.06, 0)
   SidebarUnround1.Position = UDim2.new(1, 0, 0, 0)
   SidebarUnround1.BorderSizePixel = 0
-  SidebarUnround1.BackgroundColor3 = Theme["SidebarColor"]
+  SidebarUnround1.BackgroundColor3 = Theme.SidebarColor
   SidebarUnround1.Name = "Unround"
 
   local SidebarUnround2 = Instance.new("Frame", Sidebar)
   SidebarUnround2.Position = UDim2.new(1, 0, 1, 0)
   SidebarUnround2.Size = UDim2.new(-0.06, 0, -0.06)
   SidebarUnround2.BorderSizePixel = 0
-  SidebarUnround2.BackgroundColor3 = Theme["SidebarColor"]
+  SidebarUnround2.BackgroundColor3 = Theme.SidebarColor
   SidebarUnround2.Name = "Unround"
 
   --// TabContent Creation \\--
@@ -239,7 +274,7 @@ function Library.NewWindow(Name)
 
   --// Return the window \\--
 
-  return setmetatable( {WindowName = Name, WindowUIObject = ScreenGui, WindowCurrentTab = nil, Toggled = true }, Window)
+  return setmetatable( { WindowName = Name, WindowUIObject = ScreenGui, WindowTabHolder = TopContent, WindowTabContent = TabContent, WindowCurrentTab = nil, Toggled = true }, Window)
 end
 
 --// Finish up \\--
