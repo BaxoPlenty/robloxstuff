@@ -202,7 +202,7 @@ function Window:AddTab(TabName, TabIcon)
   Click.Name = "Click"
 
   if self.WindowCurrentTab == nil then
-    self:SelectTab(Tab)
+    self:SelectTab(Holder)
   end
 
   Holder.MouseEnter:Connect(
