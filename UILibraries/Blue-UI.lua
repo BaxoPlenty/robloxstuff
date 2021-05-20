@@ -208,7 +208,7 @@ function Window:AddTab(TabName, TabIcon)
 
   local NewTab = setmetatable({ Window = self, Elements = {} }, Tab)
 
-  table.insert(self.Tabs, nil, NewTab)
+  table.insert(self.Tabs, NewTab)
   return NewTab
 end
 
