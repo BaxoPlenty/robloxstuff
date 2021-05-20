@@ -158,6 +158,15 @@ end
 
 function Window:SelectTab(Tab)
   print("trollage")
+  
+  if not Tab then
+    print("no tab")
+  end
+
+  if Tab:FindFirstChild("Icon") then
+    print("icon exists")
+  end
+
   FadeIcon(Tab.Icon, Theme.Icon.Active)
   print("set1")
 
@@ -189,6 +198,7 @@ function Window:AddTab(TabName, TabIcon)
 
   local Icon = Instance.new("ImageLabel", Holder)
 
+  Icon.Name = "Icon"
   Icon.Position = UDim2.new(0.25, 0, 0.2, 0)
   Icon.Size = UDim2.new(0.6, 0, 0.6, 0)
   Icon.BackgroundTransparency = 1
@@ -205,6 +215,7 @@ function Window:AddTab(TabName, TabIcon)
   Click.Name = "Click"
 
   if self:GetCurrentTab() == nil then
+    print("Setting1319813988131")
     self:SelectTab(Holder)
   end
 
