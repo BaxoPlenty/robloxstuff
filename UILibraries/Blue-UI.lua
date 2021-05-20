@@ -19,7 +19,6 @@ Features:
 - Up to 3 sections per tab
 
 --]]
-
 --// Setup \\--
 
 local Players = game:GetService("Players")
@@ -117,23 +116,23 @@ end
 local function FadeIcon(Icon, Color)
   local Information = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, false, 0)
 
-	local Properties = {
-		ImageColor3 = Color
-	}
+  local Properties = {
+    ImageColor3 = Color
+  }
 
-	TweenService:Create(Icon, Information, Properties):Play()
+  TweenService:Create(Icon, Information, Properties):Play()
 end
 
 -- FadeFrame(<Instance> Frame, <Color3> Color)
 
 local function FadeFrame(Frame, Color)
-	local Information = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, false, 0)
+  local Information = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, false, 0)
 
-	local Properties = {
-		BackgroundColor3 = Color
-	}
+  local Properties = {
+    BackgroundColor3 = Color
+  }
 
-	TweenService:Create(Frame, Information, Properties):Play()
+  TweenService:Create(Frame, Information, Properties):Play()
 end
 
 --// UI Library \\--
@@ -142,7 +141,7 @@ end
 
 function Window:Destroy()
   self.WindowUIObject:Destroy()
-  
+
   self.__index = nil
   setmetatable(self, nil)
 end
@@ -158,9 +157,22 @@ end
 
 function Window:SelectTab(Tab)
   FadeIcon(Tab.Icon, Theme.Icon.Active)
-  FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
+print("set1")
+  if self.WindowCurrentTab then
+    FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
+  end
+
+  print("set2")
 
   self.WindowCurrentTab = Tab
+
+  print("set3")
+end
+
+-- <Tab> Window:GetCurrentTab()
+
+function Window:GetCurrentTab()
+  return self.WindowCurrentTab
 end
 
 -- <Tab> Window:AddTab(TabName, TabIcon)
@@ -173,7 +185,7 @@ function Window:AddTab(TabName, TabIcon)
   Holder.BackgroundColor3 = Theme.Tab.None
 
   local Icon = Instance.new("ImageLabel", Holder)
-  
+
   Icon.Position = UDim2.new(0.25, 0, 0.2, 0)
   Icon.Size = UDim2.new(0.6, 0, 0.6, 0)
   Icon.BackgroundTransparency = 1
@@ -190,29 +202,34 @@ function Window:AddTab(TabName, TabIcon)
   Click.Name = "Click"
 
   if self.WindowCurrentTab == nil then
-    Icon.ImageColor3 = Theme.Icon.Active
-    self.WindowCurrentTab = Holder
+    self:SelectTab(Tab)
   end
 
-  Holder.MouseEnter:Connect(function()
-    if self.WindowCurrentTab ~= Holder then
-      FadeIcon(Icon, Theme.Icon.Hovered)
+  Holder.MouseEnter:Connect(
+    function()
+      if self:GetCurrentTab() ~= Holder then
+        FadeIcon(Icon, Theme.Icon.Hovered)
+      end
     end
-  end)
+  )
 
-  Holder.MouseLeave:Connect(function()
-    if self.WindowCurrentTab ~= Holder then
-      FadeIcon(Icon, Theme.Icon.None)
+  Holder.MouseLeave:Connect(
+    function()
+      if self:GetCurrentTab() ~= Holder then
+        FadeIcon(Icon, Theme.Icon.None)
+      end
     end
-  end)
+  )
 
-  Click.MouseButton1Click:Connect(function()
-    if self.WindowCurrentTab ~= Holder then
-      self:SelectTab(Holder)
+  Click.MouseButton1Click:Connect(
+    function()
+      if self:GetCurrentTab() ~= Holder then
+        self:SelectTab(Holder)
+      end
     end
-  end)
+  )
 
-  local NewTab = setmetatable({ Window = self, Elements = {} }, Tab)
+  local NewTab = setmetatable({Window = self, Elements = {}}, Tab)
 
   table.insert(self.Tabs, NewTab)
   return NewTab
@@ -272,7 +289,7 @@ function Library.NewWindow(Name)
   BackgroundContent.Name = "Content"
   BackgroundContent.BackgroundTransparency = 1
   BackgroundContent.BorderSizePixel = 0
-  BackgroundContent.Size = UDim2.new(1, 0, 1,0)
+  BackgroundContent.Size = UDim2.new(1, 0, 1, 0)
 
   --// Sidebar Creation \\--
 
@@ -280,15 +297,15 @@ function Library.NewWindow(Name)
   Sidebar.Name = "Sidebar"
   Sidebar.BackgroundColor3 = Theme.SidebarColor
   Sidebar.BorderSizePixel = 0
-  Sidebar.Size = UDim2.new(0.095, 0, 1,0)
+  Sidebar.Size = UDim2.new(0.095, 0, 1, 0)
 
   ORoundElement(Sidebar, 3)
-  
+
   local STabs = Instance.new("Frame", Sidebar)
   STabs.Name = "Tabs"
   STabs.BackgroundTransparency = 1
   STabs.BorderSizePixel = 0
-  STabs.Size = UDim2.new(1, 0, 1,0)
+  STabs.Size = UDim2.new(1, 0, 1, 0)
 
   local BottomContent = Instance.new("Frame", STabs)
   BottomContent.Name = "BottomContent"
@@ -340,7 +357,18 @@ function Library.NewWindow(Name)
 
   --// Return the window \\--
 
-  return setmetatable( { WindowName = Name, WindowUIObject = ScreenGui, WindowTabHolder = TopContent, WindowTabContent = TabContent, WindowCurrentTab = nil, Toggled = true, Tabs = {} }, Window)
+  return setmetatable(
+    {
+      WindowName = Name,
+      WindowUIObject = ScreenGui,
+      WindowTabHolder = TopContent,
+      WindowTabContent = TabContent,
+      WindowCurrentTab = nil,
+      Toggled = true,
+      Tabs = {}
+    },
+    Window
+  )
 end
 
 --// Finish up \\--
