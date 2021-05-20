@@ -150,15 +150,18 @@ end
 
 function Window:Toggle()
   self.WindowUIObject.Enabled = not self.Toggled
+
   self.Toggled = not self.Toggled
 end
 
 -- Window:SelectTab(Tab)
 
 function Window:SelectTab(Tab)
+  print("trollage")
   FadeIcon(Tab.Icon, Theme.Icon.Active)
-print("set1")
-  if self.WindowCurrentTab then
+  print("set1")
+
+  if self.WindowCurrentTab ~= nil then
     FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
   end
 
@@ -201,7 +204,7 @@ function Window:AddTab(TabName, TabIcon)
   Click.Size = UDim2.new(1, 0, 1, 0)
   Click.Name = "Click"
 
-  if self.WindowCurrentTab == nil then
+  if self:GetCurrentTab() == nil then
     self:SelectTab(Holder)
   end
 
