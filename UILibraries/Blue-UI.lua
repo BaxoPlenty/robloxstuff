@@ -248,7 +248,7 @@ function Section:AddTextbox(Alignment, Name, Placeholder, DefaultText, Callback)
   Label.TextXAlignment = Enum.TextXAlignment.Left
 
   TextInput.Focused:Connect(function()
-    FadeFrame(TextboxFrame, Theme.Component.Active)
+    FadeFrame(TextboxFrame, Theme.Component.Hovered)
   end)
 
   TextInput.FocusLost:Connect(function()
