@@ -56,6 +56,11 @@ local Theme = {
     ["Hovered"] = Color3.fromRGB(122, 126, 136),
     ["Active"] = Color3.fromRGB(122, 126, 136),
     ["None"] = Color3.fromRGB(60, 59, 67)
+  },
+  ["Component"] = {
+    ["Hovered"] = Color3.fromRGB(81, 79, 126),
+    ["Active"] = Color3.fromRGB(102, 140, 255),
+    ["None"] = Color3.fromRGB(40, 41, 54)
   }
 }
 
@@ -158,6 +163,31 @@ end
 
 --// UI Library \\--
 
+-- Section:AddButton(Alignment, Label, Callback)
+
+function Section:AddButton(Alignment, Label, Callback)
+  local AlignFrame = self.ComponentsHolder[Alignment]
+
+  if self.ComponentCount[Alignment] == 16 then
+    return
+  end
+
+  self.ComponentCount[Alignment] += 1
+
+  local ComponentFrame = Instance.new("Frame", AlignFrame)
+
+  ComponentFrame.BackgroundTransparency = 1
+  ComponentFrame.BorderSizePixel = 0
+  ComponentFrame.Name = "Component"
+
+  local ButtonFrame = Instance.new("Frame", ComponentFrame)
+
+  ButtonFrame.BorderSizePixel = 0
+  ButtonFrame.BackgroundColor3 = Theme.Component.None
+  ButtonFrame.Size = UDim2.new(0.95, 0, 1, 0)
+  ButtonFrame.Position = UDim2.new(0.05, 0, 0, 0)
+end
+
 -- Tab:SelectSection(Section)
 
 function Tab:SelectSection(Section)
@@ -203,7 +233,44 @@ function Tab:AddSection(Name)
   Click.Name = "Click"
   Click.ZIndex = 2
 
-  local NewSection = setmetatable({ SectionName = Name, SectionInstance = SectionInstance }, Section)
+  local Components = Instance.new("Frame", self.ComponentsHolder)
+
+  Components.BackgroundTransparency = 1
+  Components.BorderSizePixel = 0
+  Components.Name = Name
+  Components.Size = UDim2.new(1, 0, 1, 0)
+
+  local Left = Instance.new("Frame", Components)
+
+  Left.BackgroundTransparency = 1
+  Left.BorderSizePixel = 0
+  Left.Name = "Left"
+  Left.Size = UDim2.new(0.5, 0, 1, 0)
+
+  GridLayout(Left, Enum.FillDirection.Horizontal, 16, UDim2.new(0.95, 0, 0.05, 0), UDim2.new(0, 0, 0.005, 0))
+
+  local Right = Instance.new("Frame", Components)
+
+  Right.BackgroundTransparency = 1
+  Right.BorderSizePixel = 0
+  Right.Name = "Right"
+  Right.Position = UDim2.new(0.5, 0, 0, 0)
+  Right.Size = UDim2.new(0.5, 0, 1, 0)
+
+  GridLayout(Right, Enum.FillDirection.Horizontal, 16, UDim2.new(0.95, 0, 0.05, 0), UDim2.new(0, 0, 0.005, 0))
+
+  local NewSection = setmetatable(
+    {
+      SectionName = Name,
+      SectionInstance = SectionInstance,
+      ComponentsHolder = Components,
+      ComponentCount = {
+        ["Left"] = 0,
+        ["Right"] = 0
+      }
+    },
+    Section
+  )
 
   self.Sections[Name] = NewSection
   self.SectionCount += 1
