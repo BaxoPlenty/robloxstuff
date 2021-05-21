@@ -173,9 +173,9 @@ end
 -- <Section> Tab:AddSection(Name)
 
 function Tab:AddSection(Name)
-  print(#self.Sections)
+  print(self.SectionCount)
 
-  if #self.Sections == 4 then
+  if self.SectionCount == 4 then
     return
   end
 
@@ -208,6 +208,7 @@ function Tab:AddSection(Name)
   local NewSection = setmetatable({ SectionName = Name, SectionInstance = SectionInstance }, Section)
 
   self.Sections[Name] = NewSection
+  self.SectionCount += 1
 
   if self.CurrentSection == nil then
     self:SelectSection(NewSection)
@@ -282,9 +283,11 @@ end
 -- <Tab> Window:AddTab(TabName, TabIcon)
 
 function Window:AddTab(TabName, TabIcon)
-  if #self.Tabs == 6 then
+  if self.TabCount == 6 then
     return
   end
+
+  self.TabCount += 1
 
   local Holder = Instance.new("Frame", self.WindowTabHolder)
 
@@ -352,7 +355,7 @@ function Window:AddTab(TabName, TabIcon)
   Components.Size = UDim2.new(1, 0, 0.875, 0)
   Components.Position = UDim2.new(0, 0, 0.125, 0)
 
-  local NewTab = setmetatable({ Window = self, ActiveSection = nil, TabContent = Content, TabInstance = Holder, ComponentsHolder = Components, SectionsHolder = SectionsHolder, Sections = {} }, Tab)
+  local NewTab = setmetatable({ Window = self, ActiveSection = nil, TabContent = Content, TabInstance = Holder, ComponentsHolder = Components, SectionsHolder = SectionsHolder, Sections = {}, SectionCount = 0 }, Tab)
 
   if self:GetCurrentTab() == nil then
     self:SelectTab(NewTab)
@@ -518,6 +521,7 @@ function Library.NewWindow(Name)
       WindowTabContent = TabContent,
       WindowCurrentTab = nil,
       Toggled = true,
+      TabCount = 0,
       Tabs = {}
     },
     Window
