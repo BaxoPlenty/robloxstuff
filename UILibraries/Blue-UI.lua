@@ -158,15 +158,17 @@ end
 
 function Window:SelectTab(Tab)
   FadeIcon(Tab.Icon, Theme.Icon.Active)
+  FadeFrame(Tab, Theme.Tab.Active)
 
   if self.WindowCurrentTab ~= nil then
     FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
+    FadeFrame(self.WindowCurrentTab, Theme.Tab.None)
   end
 
   self.WindowCurrentTab = Tab
 end
 
--- <Tab> Window:GetCurrentTab()
+-- <Instance> Window:GetCurrentTab()
 
 function Window:GetCurrentTab()
   return self.WindowCurrentTab
@@ -194,7 +196,7 @@ function Window:AddTab(TabName, TabIcon)
   Icon.BackgroundTransparency = 1
   Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
 
-  Icon.Image = "http://www.roblox.com/asset/?id=" .. tostring(TabIcon)
+  Icon.Image = "rbxassetid://" .. tostring(TabIcon)
   Icon.ImageColor3 = Theme.Icon.None
 
   local Click = Instance.new("TextButton", Holder)
@@ -232,9 +234,10 @@ function Window:AddTab(TabName, TabIcon)
     end
   )
 
-  local NewTab = setmetatable({Window = self, Elements = {}}, Tab)
+  local NewTab = setmetatable({ Window = self, Elements = {}, Holder = Holder }, Tab)
 
-  table.insert(self.Tabs, NewTab)
+  self.Tabs[TabName] = NewTab
+  
   return NewTab
 end
 
