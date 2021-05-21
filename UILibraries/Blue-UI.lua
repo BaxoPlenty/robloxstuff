@@ -203,7 +203,7 @@ function Tab:SelectSection(Section)
     local OldTabContent = self.CurrentSection.ComponentsHolder
 
     self.CurrentSection.ComponentsHolder:TweenPosition(UDim2.new(1, 0, 0, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.25, true, function()
-      OldTabContent.Position = UDim2.new(1, 0, 0, 0)
+      OldTabContent.Position = UDim2.new(-1, 0, 0, 0)
     end)
   end
 
