@@ -16,7 +16,7 @@ Features:
 Example on how to make tabs:
 
 ```lua
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/BaxoPlenty/robloxstuff/testing/UILibraries/Blue-UI.lua"))() -- Initialize Library
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/BaxoPlenty/robloxstuff/Stable/UILibraries/Blue-UI.lua"))() -- Initialize Library
 
 local Window = Library.NewWindow("Test") -- Create Window
 
