@@ -56,6 +56,7 @@ local Theme = {
     ["White"] = Color3.fromRGB(218, 220, 226),
     ["Hovered"] = Color3.fromRGB(122, 126, 136),
     ["Active"] = Color3.fromRGB(122, 126, 136),
+    ["Placeholder"] = Color3.fromRGB(203, 210, 226),
     ["None"] = Color3.fromRGB(60, 59, 67)
   },
   ["Component"] = {
@@ -227,9 +228,10 @@ function Section:AddTextbox(Alignment, Name, Placeholder, DefaultText, Callback)
   TextInput.Size = UDim2.new(1, 0, 1, 0)
   TextInput.Name = "TextInput"
   TextInput.TextColor3 = Theme.Label.White
-  TextInput.PlaceholderColor3 = Theme.Label.Active
+  TextInput.PlaceholderColor3 = Theme.Label.Placeholder
   TextInput.Font = Enum.Font.SourceSansBold
   TextInput.TextSize = 14
+  TextInput.TextTruncate = Enum.TextTruncate.AtEnd
   TextInput.ZIndex = 2
 
   ORoundElement(TextboxFrame, 3)
@@ -248,7 +250,7 @@ function Section:AddTextbox(Alignment, Name, Placeholder, DefaultText, Callback)
   Label.TextXAlignment = Enum.TextXAlignment.Left
 
   TextInput.Focused:Connect(function()
-    FadeFrame(TextboxFrame, Theme.Component.Hovered)
+    FadeFrame(TextboxFrame, Theme.Component.Active)
   end)
 
   TextInput.FocusLost:Connect(function()
