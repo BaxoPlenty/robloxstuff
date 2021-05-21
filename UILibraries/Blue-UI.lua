@@ -237,8 +237,10 @@ function Window:SelectTab(Tab)
     FadeIcon(self.WindowCurrentTab.TabInstance.Icon, Theme.Icon.None)
     FadeFrame(self.WindowCurrentTab.TabInstance, Theme.Tab.None)
 
+    local OldTabContent = self.WindowCurrentTab.TabContent
+
     self.WindowCurrentTab.TabContent:TweenPosition(UDim2.new(0, 0, -1, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.25, true, function()
-      self.WindowCurrentTab.TabContent.Position = UDim2.new(0, 0, 1, 0)
+      OldTabContent.Position = UDim2.new(0, 0, 1, 0)
     end)
   end
 
@@ -287,19 +289,23 @@ function Window:AddTab(TabName, TabIcon)
   Click.ZIndex = 2
 
   local Content = Instance.new("Frame", self.WindowTabContent)
+
   Content.BackgroundTransparency = 1
   Content.BorderSizePixel = 0
   Content.Name = TabName
   Content.Size = UDim2.new(1, 0, 1, 0)
   Content.Position = UDim2.new(0, 0, 1, 0)
+  Content.ClipsDescendants = true
 
   local Sections = Instance.new("Frame", Content)
+
   Sections.BackgroundTransparency = 1
   Sections.BorderSizePixel = 0
   Sections.Name = "Sections"
   Sections.Size = UDim2.new(1, 0, 0.125, 0)
 
   local SectionsHolder = Instance.new("Frame", Sections)
+  
   SectionsHolder.BackgroundColor3 = Theme.SidebarColor
   SectionsHolder.BorderSizePixel = 0
   SectionsHolder.Name = "Holder"
