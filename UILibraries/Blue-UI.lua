@@ -193,6 +193,61 @@ function Section:AddSpacer(Alignment)
   ComponentFrame.Name = "Spacer"
 end
 
+-- Section:AddTextbox(Alignment, Name, Callback)
+
+function Section:AddTextbox(Alignment, Name, Placeholder, DefaultText, Callback)
+  local AlignFrame = self.ComponentsHolder[Alignment]
+
+  if self.ComponentCount[Alignment] == 16 then
+    return
+  end
+
+  self.ComponentCount[Alignment] += 1
+
+  local ComponentFrame = Instance.new("Frame", AlignFrame)
+
+  ComponentFrame.BackgroundTransparency = 1
+  ComponentFrame.BorderSizePixel = 0
+  ComponentFrame.Name = "Component"
+
+  local TextboxFrame = Instance.new("Frame", ComponentFrame)
+
+  TextboxFrame.BorderSizePixel = 0
+  TextboxFrame.BackgroundColor3 = Theme.Component.None
+  TextboxFrame.Size = UDim2.new(0.5, 0, 1, 0)
+  TextboxFrame.Position = UDim2.new(1, 0, 0, 0)
+  TextboxFrame.AnchorPoint = Vector2.new(1, 0)
+  TextboxFrame.Name = "TextboxFrame"
+
+  local TextInput = Instance.new("TextBox", TextboxFrame)
+
+  TextInput.BackgroundTransparency = 1
+  TextInput.Text = DefaultText
+  TextInput.PlaceholderText = Placeholder
+  TextInput.Size = UDim2.new(1, 0, 1, 0)
+  TextInput.Name = "TextInput"
+  TextInput.ZIndex = 2
+
+  ORoundElement(TextboxFrame, 3)
+
+  local Label = Instance.new("TextLabel", ComponentFrame)
+
+  Label.BackgroundTransparency = 1
+  Label.Font = Enum.Font.SourceSansBold
+  Label.TextColor3 = Theme.Label.Active
+  Label.TextSize = 14
+  Label.Text = Name
+  Label.Name = "Label"
+  Label.Position = UDim2.new(0.05, 0, 0, 0)
+  Label.Size = UDim2.new(0.45, 0, 1, 0)
+  Label.ZIndex = 2
+  Label.TextXAlignment = Enum.TextXAlignment.Left
+
+  TextInput:GetPropertyChangedSignal("Text"):Connect(function()
+    Callback(TextInput.Text)
+  end)
+end
+
 -- Section:AddButton(Alignment, Name, Callback)
 
 function Section:AddButton(Alignment, Name, Callback)
