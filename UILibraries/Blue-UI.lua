@@ -200,9 +200,9 @@ function Tab:SelectSection(Section)
   if self.CurrentSection ~= nil then
     FadeText(self.CurrentSection.SectionInstance.Label, Theme.Label.None)
 
-    local OldTabContent = Section.ComponentsHolder
+    local OldTabContent = self.CurrentSection.ComponentsHolder
 
-    Section.ComponentsHolder:TweenPosition(UDim2.new(1, 0, 0, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.25, true, function()
+    self.CurrentSection.ComponentsHolder:TweenPosition(UDim2.new(1, 0, 0, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.25, true, function()
       OldTabContent.Position = UDim2.new(1, 0, 0, 0)
     end)
   end
