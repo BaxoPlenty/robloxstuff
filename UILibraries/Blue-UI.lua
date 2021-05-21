@@ -115,6 +115,7 @@ local function GridLayout(Element, FillDirection, MaxCells, CellSize, CellPaddin
   gridlayout.CellSize = CellSize
   gridlayout.FillDirection = FillDirection
   gridlayout.CellPadding = CellPadding
+  gridlayout.SortOrder = Enum.SortOrder.LayoutOrder
 
   gridlayout.Parent = Element
 end
@@ -304,6 +305,7 @@ function Window:AddTab(TabName, TabIcon)
   
   ListLayout.FillDirection = Enum.FillDirection.Horizontal
   ListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+  ListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
   local Components = Instance.new("Frame", Content)
   Components.BackgroundTransparency = 1
