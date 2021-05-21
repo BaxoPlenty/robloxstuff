@@ -224,14 +224,14 @@ function Section:AddButton(Alignment, Name, Callback)
   end)
 
   Click.MouseButton1Down:Connect(function()
-    FadeFrame(ButtonFrame, Theme.Icon.Active)
+    FadeFrame(ButtonFrame, Theme.Component.Active)
   end)
 
   Click.MouseButton1Up:Connect(function()
     if Hovered then
-      FadeFrame(ButtonFrame, Theme.Icon.Hovered)
+      FadeFrame(ButtonFrame, Theme.Component.Hovered)
     else
-      FadeFrame(ButtonFrame, Theme.Icon.None)
+      FadeFrame(ButtonFrame, Theme.Component.None)
     end
   end)
 
