@@ -176,7 +176,7 @@ end
 
 --// UI Library \\--
 
--- Section:AddButton(Alignment, Label, Callback)
+-- Section:AddButton(Alignment, Name, Callback)
 
 function Section:AddButton(Alignment, Name, Callback)
   local AlignFrame = self.ComponentsHolder[Alignment]
@@ -251,6 +251,102 @@ function Section:AddButton(Alignment, Name, Callback)
   end)
 
   Click.MouseButton1Click:Connect(Callback)
+end
+
+-- Section:AddCheckbox(Alignment, Name, DefaultValue, Callback)
+
+function Section:AddCheckbox(Alignment, Name, DefaultValue, Callback)
+  local AlignFrame = self.ComponentsHolder[Alignment]
+
+  if self.ComponentCount[Alignment] == 16 then
+    return
+  end
+
+  self.ComponentCount[Alignment] += 1
+
+  local ComponentFrame = Instance.new("Frame", AlignFrame)
+
+  ComponentFrame.BackgroundTransparency = 1
+  ComponentFrame.BorderSizePixel = 0
+  ComponentFrame.Name = "Component"
+
+  local ActualCheckbox = Instance.new("Frame", ComponentFrame)
+
+  ActualCheckbox.BorderSizePixel = 0
+  ActualCheckbox.BackgroundColor3 = Theme.Component.None
+  ActualCheckbox.Size = UDim2.new(1, 0, 1, 0)
+  ActualCheckbox.SizeConstraint = Enum.SizeConstraint.RelativeYY
+  ActualCheckbox.Position = UDim2.new(0.935, 0, 0, 0)
+  ActualCheckbox.Name = "Actual Checkbox"
+
+  local Click = Instance.new("TextButton", ActualCheckbox)
+
+  Click.BackgroundTransparency = 1
+  Click.Text = ""
+  Click.Size = UDim2.new(1, 0, 1, 0)
+  Click.Name = "Click"
+  Click.ZIndex = 2
+
+  ORoundElement(ActualCheckbox, 3)
+
+  local Label = Instance.new("TextLabel", ComponentFrame)
+
+  Label.BackgroundTransparency = 1
+  Label.Font = Enum.Font.SourceSansBold
+  Label.TextColor3 = Theme.Label.Active
+  Label.TextSize = 14
+  Label.Text = Name
+  Label.Name = "Label"
+  Label.Position = UDim2.new(0.05, 0, 0, 0)
+  Label.Size = UDim2.new(0.85, 0, 1, 0)
+  Label.ZIndex = 2
+
+  local Hovered = false
+  local Toggled = DefaultValue
+
+  if Toggled then
+    FadeText(Label, Theme.Label.White)
+    FadeFrame(ActualCheckbox, Theme.Component.Active)
+  end
+
+  ActualCheckbox.MouseEnter:Connect(function()
+    Hovered = true
+
+    if not Toggled then
+      FadeFrame(ActualCheckbox, Theme.Component.Hovered)
+    end
+  end)
+
+  ActualCheckbox.MouseLeave:Connect(function()
+    Hovered = false
+
+    if not Toggled then
+      FadeFrame(ActualCheckbox, Theme.Component.None)
+    end
+  end)
+
+  Click.MouseButton1Click:Connect(function()
+    if not Toggled then
+      Toggled = true
+
+      FadeText(Label, Theme.Label.White)
+      FadeFrame(ActualCheckbox, Theme.Component.Active)
+
+      Callback(Toggled)
+    else
+      Toggled = false
+
+      FadeText(Label, Theme.Label.None)
+
+      if Hovered then
+        FadeFrame(ActualCheckbox, Theme.Component.Hovered)
+      else
+        FadeFrame(ActualCheckbox, Theme.Component.None)
+      end
+
+      Callback(Toggled)
+    end
+  end)
 end
 
 -- Tab:SelectSection(Section)
