@@ -198,7 +198,7 @@ function Window:AddTab(TabName, TabIcon)
   Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
   Icon.ZIndex = 2
 
-  Icon.Image = "rbxassetid://" .. tostring(TabIcon)
+  Icon.Image = "http://www.roblox.com/asset/?id=" .. TabIcon
   Icon.ImageColor3 = Theme.Icon.None
 
   local Click = Instance.new("TextButton", Holder)
