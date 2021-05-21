@@ -295,7 +295,6 @@ function Window:AddTab(TabName, TabIcon)
   Content.Name = TabName
   Content.Size = UDim2.new(1, 0, 1, 0)
   Content.Position = UDim2.new(0, 0, 1, 0)
-  Content.ClipsDescendants = true
 
   local Sections = Instance.new("Frame", Content)
 
@@ -481,6 +480,7 @@ function Library.NewWindow(Name)
   TabContent.BorderSizePixel = 0
   TabContent.Size = UDim2.new(0.905, 0, 1, 0)
   TabContent.Position = UDim2.new(0.095, 0, 0, 0)
+  TabContent.ClipsDescendants = true
 
   --// Return the window \\--
 
