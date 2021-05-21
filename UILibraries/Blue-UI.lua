@@ -226,6 +226,9 @@ function Section:AddTextbox(Alignment, Name, Placeholder, DefaultText, Callback)
   TextInput.PlaceholderText = Placeholder
   TextInput.Size = UDim2.new(1, 0, 1, 0)
   TextInput.Name = "TextInput"
+  TextInput.TextColor3 = Theme.Label.White
+  TextInput.PlaceholderColor3 = Theme.Label.None
+  TextInput.Font = Enum.Font.SourceSansBold
   TextInput.ZIndex = 2
 
   ORoundElement(TextboxFrame, 3)
