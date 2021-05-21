@@ -205,6 +205,24 @@ function Tab:AddSection(Name)
     self:SelectSection(NewSection)
   end
 
+  SectionInstance.MouseEnter:Connect(function()
+    if self.CurrentSection ~= NewSection then
+      FadeText(Label, Theme.Label.Hovered)
+    end
+  end)
+
+  SectionInstance.MouseLeave:Connect(function()
+    if self.CurrentSection ~= NewSection then
+      FadeText(Label, Theme.Label.None)
+    end
+  end)
+
+  Click.MouseButton1Click:Connect(function()
+    if self.CurrentSection ~= NewSection then
+      self:SelectSection(NewSection)
+    end
+  end)
+
   return NewSection
 end
 
