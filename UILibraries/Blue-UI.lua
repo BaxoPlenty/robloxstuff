@@ -196,6 +196,7 @@ function Window:AddTab(TabName, TabIcon)
   Icon.Size = UDim2.new(0.6, 0, 0.6, 0)
   Icon.BackgroundTransparency = 1
   Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
+  Icon.ZIndex = 2
 
   Icon.Image = "rbxassetid://" .. tostring(TabIcon)
   Icon.ImageColor3 = Theme.Icon.None
@@ -206,6 +207,7 @@ function Window:AddTab(TabName, TabIcon)
   Click.Text = ""
   Click.Size = UDim2.new(1, 0, 1, 0)
   Click.Name = "Click"
+  Click.ZIndex = 2
 
   if self:GetCurrentTab() == nil then
     self:SelectTab(Holder)
