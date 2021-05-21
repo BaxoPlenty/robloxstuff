@@ -186,6 +186,8 @@ function Section:AddButton(Alignment, Label, Callback)
   ButtonFrame.BackgroundColor3 = Theme.Component.None
   ButtonFrame.Size = UDim2.new(0.95, 0, 1, 0)
   ButtonFrame.Position = UDim2.new(0.05, 0, 0, 0)
+
+  ORoundElement(ButtonFrame, 3)
 end
 
 -- Tab:SelectSection(Section)
@@ -193,8 +195,16 @@ end
 function Tab:SelectSection(Section)
   FadeText(Section.SectionInstance.Label, Theme.Label.Active)
 
+  Section.ComponentsHolder:TweenPosition(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.25, true)
+
   if self.CurrentSection ~= nil then
     FadeText(self.CurrentSection.SectionInstance.Label, Theme.Label.None)
+
+    local OldTabContent = Section.ComponentsHolder
+
+    Section.ComponentsHolder:TweenPosition(UDim2.new(1, 0, 0, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.25, true, function()
+      OldTabContent.Position = UDim2.new(1, 0, 0, 0)
+    end)
   end
 
   self.CurrentSection = Section
@@ -239,6 +249,7 @@ function Tab:AddSection(Name)
   Components.BorderSizePixel = 0
   Components.Name = Name
   Components.Size = UDim2.new(1, 0, 1, 0)
+  Components.Position = UDim2.new(-1, 0, 0, 0)
 
   local Left = Instance.new("Frame", Components)
 
