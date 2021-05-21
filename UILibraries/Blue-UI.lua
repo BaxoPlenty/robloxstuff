@@ -53,7 +53,7 @@ local Theme = {
     ["None"] = Color3.fromRGB(60, 59, 67)
   },
   ["Label"] = {
-    ["White"] = Color3.fromRGB(255, 255, 255),
+    ["White"] = Color3.fromRGB(218, 220, 226),
     ["Hovered"] = Color3.fromRGB(122, 126, 136),
     ["Active"] = Color3.fromRGB(122, 126, 136),
     ["None"] = Color3.fromRGB(60, 59, 67)
@@ -150,6 +150,18 @@ local function FadeFrame(Frame, Color)
   TweenService:Create(Frame, Information, Properties):Play()
 end
 
+-- FadeFrameReduced(<Instance> Frame, <Color3> Color)
+
+local function FadeFrameReduced(Frame, Color)
+  local Information = TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, false, 0)
+
+  local Properties = {
+    BackgroundColor3 = Color
+  }
+
+  TweenService:Create(Frame, Information, Properties):Play()
+end
+
 -- FadeText(<Instance> Text, <Color3> Color)
 
 local function FadeText(Text, Color)
@@ -210,14 +222,32 @@ function Section:AddButton(Alignment, Name, Callback)
   Click.Name = "Click"
   Click.ZIndex = 2
 
+  local Hovered = false
+
   ButtonFrame.MouseEnter:Connect(function()
-    FadeFrame(ButtonFrame, Theme.Component.Active)
+    Hovered = true
+
+    FadeFrame(ButtonFrame, Theme.Component.Hovered)
     FadeText(Label, Theme.Label.White)
   end)
 
   ButtonFrame.MouseLeave:Connect(function()
+    Hovered = false
+
     FadeFrame(ButtonFrame, Theme.Component.None)
     FadeText(Label, Theme.Label.Active)
+  end)
+
+  Click.MouseButton1Down:Connect(function()
+    FadeFrameReduced(ButtonFrame, Theme.Component.Active)
+  end)
+
+  Click.MouseButton1Up:Connect(function()
+    if Hovered then
+      FadeFrameReduced(ButtonFrame, Theme.Component.Hovered)
+    else
+      FadeFrame(ButtonFrame, Theme.Component.None)
+    end
   end)
 
   Click.MouseButton1Click:Connect(Callback)
