@@ -416,7 +416,7 @@ function Tab:AddSection(Name)
 
   Left.BackgroundTransparency = 1
   Left.BorderSizePixel = 0
-  Left.Name = "Left"
+  Left.Name = "L"
   Left.Size = UDim2.new(0.5, 0, 1, 0)
 
   GridLayout(Left, Enum.FillDirection.Horizontal, 16, UDim2.new(0.95, 0, 0.05, 0), UDim2.new(0, 0, 0.005, 0))
@@ -425,7 +425,7 @@ function Tab:AddSection(Name)
 
   Right.BackgroundTransparency = 1
   Right.BorderSizePixel = 0
-  Right.Name = "Right"
+  Right.Name = "R"
   Right.Position = UDim2.new(0.5, 0, 0, 0)
   Right.Size = UDim2.new(0.5, 0, 1, 0)
 
@@ -437,8 +437,8 @@ function Tab:AddSection(Name)
       SectionInstance = SectionInstance,
       ComponentsHolder = Components,
       ComponentCount = {
-        ["Left"] = 0,
-        ["Right"] = 0
+        ["L"] = 0,
+        ["R"] = 0
       }
     },
     Section
