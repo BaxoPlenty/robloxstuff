@@ -1,5 +1,7 @@
 # UI Libraries
 
+These UI Libraries can be used for free. However, you need to credit me.
+
 ### Blue UI
 
 Created and scripted by BaxoPlenty
