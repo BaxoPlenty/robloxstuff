@@ -210,32 +210,14 @@ function Section:AddButton(Alignment, Name, Callback)
   Click.Name = "Click"
   Click.ZIndex = 2
 
-  local Hovered = false
-
   ButtonFrame.MouseEnter:Connect(function()
-    Hovered = true
-
-    FadeFrame(ButtonFrame, Theme.Component.Hovered)
+    FadeFrame(ButtonFrame, Theme.Component.Active)
     FadeText(Label, Theme.Label.White)
   end)
 
   ButtonFrame.MouseLeave:Connect(function()
-    Hovered = false
-
     FadeFrame(ButtonFrame, Theme.Component.None)
     FadeText(Label, Theme.Label.Active)
-  end)
-
-  Click.MouseButton1Down:Connect(function()
-    FadeFrame(ButtonFrame, Theme.Component.Active)
-  end)
-
-  Click.MouseButton1Up:Connect(function()
-    if Hovered then
-      FadeFrame(ButtonFrame, Theme.Component.Hovered)
-    else
-      FadeFrame(ButtonFrame, Theme.Component.None)
-    end
   end)
 
   Click.MouseButton1Click:Connect(Callback)
