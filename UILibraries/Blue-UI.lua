@@ -227,7 +227,7 @@ function Section:AddTextbox(Alignment, Name, Placeholder, DefaultText, Callback)
   TextInput.Size = UDim2.new(1, 0, 1, 0)
   TextInput.Name = "TextInput"
   TextInput.TextColor3 = Theme.Label.White
-  TextInput.PlaceholderColor3 = Theme.Label.None
+  TextInput.PlaceholderColor3 = Theme.Label.Active
   TextInput.Font = Enum.Font.SourceSansBold
   TextInput.TextSize = 14
   TextInput.ZIndex = 2
@@ -248,11 +248,11 @@ function Section:AddTextbox(Alignment, Name, Placeholder, DefaultText, Callback)
   Label.TextXAlignment = Enum.TextXAlignment.Left
 
   TextInput.Focused:Connect(function()
-    FadeFrameReduced(TextboxFrame, Theme.Component.Active)
+    FadeFrame(TextboxFrame, Theme.Component.Active)
   end)
 
   TextInput.FocusLost:Connect(function()
-    FadeFrameReduced(TextboxFrame, Theme.Component.None)
+    FadeFrame(TextboxFrame, Theme.Component.None)
   end)
 
   TextInput:GetPropertyChangedSignal("Text"):Connect(function()
