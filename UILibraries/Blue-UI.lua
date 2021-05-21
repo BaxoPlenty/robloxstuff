@@ -165,7 +165,7 @@ end
 
 -- Section:AddButton(Alignment, Label, Callback)
 
-function Section:AddButton(Alignment, Label, Callback)
+function Section:AddButton(Alignment, Name, Callback)
   local AlignFrame = self.ComponentsHolder[Alignment]
 
   if self.ComponentCount[Alignment] == 16 then
@@ -186,8 +186,56 @@ function Section:AddButton(Alignment, Label, Callback)
   ButtonFrame.BackgroundColor3 = Theme.Component.None
   ButtonFrame.Size = UDim2.new(0.95, 0, 1, 0)
   ButtonFrame.Position = UDim2.new(0.05, 0, 0, 0)
+  ButtonFrame.Name = Name
 
   ORoundElement(ButtonFrame, 3)
+
+  local Label = Instance.new("TextLabel", SectionInstance)
+
+  Label.BackgroundTransparency = 1
+  Label.Font = Enum.Font.SourceSansBold
+  Label.TextColor3 = Theme.Label.Active
+  Label.TextSize = 14
+  Label.Text = Name
+  Label.Name = "Label"
+  Label.Size = UDim2.new(1, 0, 1, 0)
+  Label.ZIndex = 2
+
+  local Click = Instance.new("TextButton", SectionInstance)
+
+  Click.BackgroundTransparency = 1
+  Click.Text = ""
+  Click.Size = UDim2.new(1, 0, 1, 0)
+  Click.Name = "Click"
+  Click.ZIndex = 2
+
+  local Hovered = false
+
+  ButtonFrame.MouseEnter:Connect(function()
+    Hovered = true
+
+    FadeFrame(ButtonFrame, Theme.Component.Hovered)
+  end)
+
+  ButtonFrame.MouseLeave:Connect(function()
+    Hovered = false
+
+    FadeFrame(ButtonFrame, Theme.Component.None)
+  end)
+
+  Click.MouseButton1Down:Connect(function()
+    FadeFrame(ButtonFrame, Theme.Icon.Active)
+  end)
+
+  Click.MouseButton1Up:Connect(function()
+    if Hovered then
+      FadeFrame(ButtonFrame, Theme.Icon.Hovered)
+    else
+      FadeFrame(ButtonFrame, Theme.Icon.None)
+    end
+  end)
+
+  Click.MouseButton1Click:Connect(Callback)
 end
 
 -- Tab:SelectSection(Section)
