@@ -53,6 +53,7 @@ local Theme = {
     ["None"] = Color3.fromRGB(60, 59, 67)
   },
   ["Label"] = {
+    ["White"] = Color3.fromRGB(218, 220, 226),
     ["Hovered"] = Color3.fromRGB(122, 126, 136),
     ["Active"] = Color3.fromRGB(122, 126, 136),
     ["None"] = Color3.fromRGB(60, 59, 67)
@@ -225,9 +226,12 @@ function Section:AddButton(Alignment, Name, Callback)
 
   Click.MouseButton1Down:Connect(function()
     FadeFrame(ButtonFrame, Theme.Component.Active)
+    FadeText(Label, Theme.Label.White)
   end)
 
   Click.MouseButton1Up:Connect(function()
+    FadeText(Label, Theme.Label.Active)
+
     if Hovered then
       FadeFrame(ButtonFrame, Theme.Component.Hovered)
     else
