@@ -231,9 +231,15 @@ function Window:SelectTab(Tab)
   FadeIcon(Tab.TabInstance.Icon, Theme.Icon.Active)
   FadeFrame(Tab.TabInstance, Theme.Tab.Active)
 
+  Tab.TabContent:TweenPosition(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.25, true)
+
   if self.WindowCurrentTab ~= nil then
     FadeIcon(self.WindowCurrentTab.TabInstance.Icon, Theme.Icon.None)
     FadeFrame(self.WindowCurrentTab.TabInstance, Theme.Tab.None)
+
+    self.WindowCurrentTab.TabContent:TweenPosition(UDim2.new(0, 0, -1, 0), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.25, true, function()
+      self.WindowCurrentTab.TabContent.Position = UDim2.new(0, 0, 1, 0)
+    end)
   end
 
   self.WindowCurrentTab = Tab
@@ -285,6 +291,7 @@ function Window:AddTab(TabName, TabIcon)
   Content.BorderSizePixel = 0
   Content.Name = TabName
   Content.Size = UDim2.new(1, 0, 1, 0)
+  Content.Position = UDim2.new(0, 0, 1, 0)
 
   local Sections = Instance.new("Frame", Content)
   Sections.BackgroundTransparency = 1
@@ -314,7 +321,7 @@ function Window:AddTab(TabName, TabIcon)
   Components.Size = UDim2.new(1, 0, 0.875, 0)
   Components.Position = UDim2.new(0, 0, 0.125, 0)
 
-  local NewTab = setmetatable({ Window = self, ActiveSection = nil, TabInstance = Holder, ComponentsHolder = Components, SectionsHolder = SectionsHolder }, Tab)
+  local NewTab = setmetatable({ Window = self, ActiveSection = nil, TabContent = Content, TabInstance = Holder, ComponentsHolder = Components, SectionsHolder = SectionsHolder }, Tab)
 
   if self:GetCurrentTab() == nil then
     self:SelectTab(NewTab)
