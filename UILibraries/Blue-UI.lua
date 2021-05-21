@@ -216,22 +216,21 @@ function Section:AddButton(Alignment, Name, Callback)
     Hovered = true
 
     FadeFrame(ButtonFrame, Theme.Component.Hovered)
+    FadeText(Label, Theme.Label.White)
   end)
 
   ButtonFrame.MouseLeave:Connect(function()
     Hovered = false
 
     FadeFrame(ButtonFrame, Theme.Component.None)
+    FadeText(Label, Theme.Label.Active)
   end)
 
   Click.MouseButton1Down:Connect(function()
     FadeFrame(ButtonFrame, Theme.Component.Active)
-    FadeText(Label, Theme.Label.White)
   end)
 
   Click.MouseButton1Up:Connect(function()
-    FadeText(Label, Theme.Label.Active)
-
     if Hovered then
       FadeFrame(ButtonFrame, Theme.Component.Hovered)
     else
