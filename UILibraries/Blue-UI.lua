@@ -276,7 +276,8 @@ function Section:AddCheckbox(Alignment, Name, DefaultValue, Callback)
   ActualCheckbox.BackgroundColor3 = Theme.Component.None
   ActualCheckbox.Size = UDim2.new(1, 0, 1, 0)
   ActualCheckbox.SizeConstraint = Enum.SizeConstraint.RelativeYY
-  ActualCheckbox.Position = UDim2.new(0.935, 0, 0, 0)
+  ActualCheckbox.Position = UDim2.new(1, 0, 0, 0)
+  ActualCheckbox.AnchorPoint = Vector2.new(1, 0)
   ActualCheckbox.Name = "Actual Checkbox"
 
   local Click = Instance.new("TextButton", ActualCheckbox)
@@ -336,7 +337,7 @@ function Section:AddCheckbox(Alignment, Name, DefaultValue, Callback)
     else
       Toggled = false
 
-      FadeText(Label, Theme.Label.None)
+      FadeText(Label, Theme.Label.Active)
 
       if Hovered then
         FadeFrame(ActualCheckbox, Theme.Component.Hovered)
