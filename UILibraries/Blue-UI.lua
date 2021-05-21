@@ -187,6 +187,8 @@ function Tab:AddSection(Name)
   Label.TextSize = 14
   Label.Text = Name
   Label.Name = "Label"
+  Label.Size = UDim2.new(1, 0, 1, 0)
+  Label.ZIndex = 2
 
   local Click = Instance.new("TextButton", SectionInstance)
 
@@ -194,6 +196,7 @@ function Tab:AddSection(Name)
   Click.Text = ""
   Click.Size = UDim2.new(1, 0, 1, 0)
   Click.Name = "Click"
+  Click.ZIndex = 2
 
   local NewSection = setmetatable({ SectionName = Name, SectionInstance = SectionInstance }, Section)
 
