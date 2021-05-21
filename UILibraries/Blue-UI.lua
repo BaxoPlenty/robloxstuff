@@ -187,6 +187,7 @@ function Window:AddTab(TabName, TabIcon)
   Holder.Name = TabName
   Holder.BorderSizePixel = 0
   Holder.BackgroundColor3 = Theme.Tab.None
+  Holder.ZIndex = 2
 
   local Icon = Instance.new("ImageLabel", Holder)
 
