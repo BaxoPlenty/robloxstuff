@@ -190,7 +190,7 @@ function Section:AddButton(Alignment, Name, Callback)
 
   ORoundElement(ButtonFrame, 3)
 
-  local Label = Instance.new("TextLabel", SectionInstance)
+  local Label = Instance.new("TextLabel", ButtonFrame)
 
   Label.BackgroundTransparency = 1
   Label.Font = Enum.Font.SourceSansBold
@@ -201,7 +201,7 @@ function Section:AddButton(Alignment, Name, Callback)
   Label.Size = UDim2.new(1, 0, 1, 0)
   Label.ZIndex = 2
 
-  local Click = Instance.new("TextButton", SectionInstance)
+  local Click = Instance.new("TextButton", ButtonFrame)
 
   Click.BackgroundTransparency = 1
   Click.Text = ""
