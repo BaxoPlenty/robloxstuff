@@ -173,6 +173,8 @@ end
 -- <Section> Tab:AddSection(Name)
 
 function Tab:AddSection(Name)
+  print(#self.Sections)
+
   if #self.Sections == 4 then
     return
   end
