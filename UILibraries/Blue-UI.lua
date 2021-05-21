@@ -173,8 +173,6 @@ end
 -- <Section> Tab:AddSection(Name)
 
 function Tab:AddSection(Name)
-  print(self.SectionCount)
-
   if self.SectionCount == 4 then
     return
   end
