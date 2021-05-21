@@ -53,7 +53,7 @@ local Theme = {
     ["None"] = Color3.fromRGB(60, 59, 67)
   },
   ["Label"] = {
-    ["White"] = Color3.fromRGB(218, 220, 226),
+    ["White"] = Color3.fromRGB(255, 255, 255),
     ["Hovered"] = Color3.fromRGB(122, 126, 136),
     ["Active"] = Color3.fromRGB(122, 126, 136),
     ["None"] = Color3.fromRGB(60, 59, 67)
