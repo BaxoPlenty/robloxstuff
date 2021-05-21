@@ -16,7 +16,7 @@ Credits:
 Features:
 
 - Up to 6 total tabs
-- Up to 3 sections per tab
+- Up to 4 sections per tab
 
 --]]
 --// Setup \\--
@@ -173,7 +173,7 @@ end
 -- <Section> Tab:AddSection(Name)
 
 function Tab:AddSection(Name)
-  if #self.Sections == 3 then
+  if #self.Sections == 4 then
     return
   end
 
@@ -333,6 +333,7 @@ function Window:AddTab(TabName, TabIcon)
   SectionsHolder.Name = "Holder"
   SectionsHolder.Position = UDim2.new(0.1, 0, 0.2, 0)
   SectionsHolder.Size = UDim2.new(0.8, 0, 0.6, 0)
+  SectionsHolder.ClipsDescendants = true
 
   ORoundElement(SectionsHolder, 3)
 
