@@ -175,6 +175,23 @@ local function FadeText(Text, Color)
 end
 
 --// UI Library \\--
+-- Section:AddSpacer(Alignment)
+
+function Section:AddSpacer(Alignment)
+  local AlignFrame = self.ComponentsHolder[Alignment]
+
+  if self.ComponentCount[Alignment] == 16 then
+    return
+  end
+
+  self.ComponentCount[Alignment] += 1
+
+  local ComponentFrame = Instance.new("Frame", AlignFrame)
+
+  ComponentFrame.BackgroundTransparency = 1
+  ComponentFrame.BorderSizePixel = 0
+  ComponentFrame.Name = "Spacer"
+end
 
 -- Section:AddButton(Alignment, Name, Callback)
 
