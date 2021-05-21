@@ -33,6 +33,9 @@ Window.__index = Window
 local Tab = {}
 Tab.__index = Tab
 
+local Section = {}
+Section.__index = Section
+
 local Theme = {
   ["MainBackground"] = Color3.fromRGB(28, 28, 35),
   ["SidebarColor"] = Color3.fromRGB(27, 26, 32),
@@ -45,6 +48,11 @@ local Theme = {
     ["None"] = Color3.fromRGB(27, 26, 32)
   },
   ["Icon"] = {
+    ["Hovered"] = Color3.fromRGB(122, 126, 136),
+    ["Active"] = Color3.fromRGB(122, 126, 136),
+    ["None"] = Color3.fromRGB(60, 59, 67)
+  },
+  ["Label"] = {
     ["Hovered"] = Color3.fromRGB(122, 126, 136),
     ["Active"] = Color3.fromRGB(122, 126, 136),
     ["None"] = Color3.fromRGB(60, 59, 67)
@@ -135,7 +143,66 @@ local function FadeFrame(Frame, Color)
   TweenService:Create(Frame, Information, Properties):Play()
 end
 
+-- FadeText(<Instance> Text, <Color3> Color)
+
+local function FadeText(Text, Color)
+  local Information = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, 0, false, 0)
+
+  local Properties = {
+    TextColor3 = Color
+  }
+
+  TweenService:Create(Text, Information, Properties):Play()
+end
+
 --// UI Library \\--
+
+-- Tab:SelectSection(Section)
+
+function Tab:SelectSection(Section)
+  FadeText(Section.SectionInstance.Label, Theme.Label.Active)
+
+  if self.CurrentSection ~= nil then
+    FadeText(self.CurrentSection.SectionInstance.Label, Theme.Label.None)
+  end
+
+  self.CurrentSection = Section
+end
+
+-- <Section> Tab:AddSection(Name)
+
+function Tab:AddSection(Name)
+  local SectionInstance = Instance.new("Frame", self.SectionsHolder)
+
+  SectionInstance.BackgroundTransparency = 1
+  SectionInstance.BorderSizePixel = 0
+  SectionInstance.Name = Name
+  SectionInstance.Size = UDim2.new(0.25, 0, 1, 0)
+
+  local Label = Instance.new("TextLabel", SectionInstance)
+
+  Label.BackgroundTransparency = 1
+  Label.Font = Enum.Font.SourceSansBold
+  Label.TextColor3 = Theme.Label.None
+  Label.TextSize = 14
+  Label.Text = Name
+  Label.Name = "Label"
+
+  local Click = Instance.new("TextButton", SectionInstance)
+
+  Click.BackgroundTransparency = 1
+  Click.Text = ""
+  Click.Size = UDim2.new(1, 0, 1, 0)
+  Click.Name = "Click"
+
+  local NewSection = setmetatable({ SectionName = Name, SectionInstance = SectionInstance }, Section)
+
+  if self.CurrentSection == nil then
+    self:SelectSection(NewSection)
+  end
+
+  return NewSection
+end
 
 -- Window:Destroy()
 
@@ -157,12 +224,12 @@ end
 -- Window:SelectTab(Tab)
 
 function Window:SelectTab(Tab)
-  FadeIcon(Tab.Icon, Theme.Icon.Active)
-  FadeFrame(Tab, Theme.Tab.Active)
+  FadeIcon(Tab.TabInstance.Icon, Theme.Icon.Active)
+  FadeFrame(Tab.TabInstance, Theme.Tab.Active)
 
   if self.WindowCurrentTab ~= nil then
-    FadeIcon(self.WindowCurrentTab.Icon, Theme.Icon.None)
-    FadeFrame(self.WindowCurrentTab, Theme.Tab.None)
+    FadeIcon(self.WindowCurrentTab.TabInstance.Icon, Theme.Icon.None)
+    FadeFrame(self.WindowCurrentTab.TabInstance, Theme.Tab.None)
   end
 
   self.WindowCurrentTab = Tab
@@ -209,13 +276,48 @@ function Window:AddTab(TabName, TabIcon)
   Click.Name = "Click"
   Click.ZIndex = 2
 
+  local Content = Instance.new("Frame", self.WindowTabContent)
+  Content.BackgroundTransparency = 1
+  Content.BorderSizePixel = 0
+  Content.Name = TabName
+  Content.Size = UDim2.new(1, 0, 1, 0)
+
+  local Sections = Instance.new("Frame", Content)
+  Sections.BackgroundTransparency = 1
+  Sections.BorderSizePixel = 0
+  Sections.Name = "Sections"
+  Sections.Size = UDim2.new(1, 0, 0.125, 0)
+
+  local SectionsHolder = Instance.new("Frame", Sections)
+  SectionsHolder.BackgroundColor3 = Theme.SidebarColor
+  SectionsHolder.BorderSizePixel = 0
+  SectionsHolder.Name = "Holder"
+  SectionsHolder.Position = UDim2.new(0.1, 0, 0.2, 0)
+  SectionsHolder.Size = UDim2.new(0.8, 0, 0.6, 0)
+
+  ORoundElement(SectionsHolder, 3)
+
+  local ListLayout = Instance.new("UIListLayout", SectionsHolder)
+  
+  ListLayout.FillDirection = Enum.FillDirection.Horizontal
+  ListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+  local Components = Instance.new("Frame", Content)
+  Components.BackgroundTransparency = 1
+  Components.BorderSizePixel = 0
+  Components.Name = "Components"
+  Components.Size = UDim2.new(1, 0, 0.875, 0)
+  Components.Position = UDim2.new(0, 0, 0.125, 0)
+
+  local NewTab = setmetatable({ Window = self, ActiveSection = nil, TabInstance = Holder, ComponentsHolder = Components, SectionsHolder = SectionsHolder }, Tab)
+
   if self:GetCurrentTab() == nil then
-    self:SelectTab(Holder)
+    self:SelectTab(NewTab)
   end
 
   Holder.MouseEnter:Connect(
     function()
-      if self:GetCurrentTab() ~= Holder then
+      if self:GetCurrentTab() ~= NewTab then
         FadeIcon(Icon, Theme.Icon.Hovered)
       end
     end
@@ -223,7 +325,7 @@ function Window:AddTab(TabName, TabIcon)
 
   Holder.MouseLeave:Connect(
     function()
-      if self:GetCurrentTab() ~= Holder then
+      if self:GetCurrentTab() ~= NewTab then
         FadeIcon(Icon, Theme.Icon.None)
       end
     end
@@ -231,13 +333,11 @@ function Window:AddTab(TabName, TabIcon)
 
   Click.MouseButton1Click:Connect(
     function()
-      if self:GetCurrentTab() ~= Holder then
-        self:SelectTab(Holder)
+      if self:GetCurrentTab() ~= NewTab then
+        self:SelectTab(NewTab)
       end
     end
   )
-
-  local NewTab = setmetatable({ Window = self, Elements = {}, Holder = Holder }, Tab)
 
   self.Tabs[TabName] = NewTab
   
