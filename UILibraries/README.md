@@ -8,7 +8,7 @@ Created and scripted by BaxoPlenty
 
 Credits:
 
-- NoviHacks | Design inspiration for the UI library ( If you want a takedown, direct message me on discord: BaxoPlenty#0001 )
+- NoviHacks | Design inspiration for the UI library ( If you want a takedown, direct message me on discord: BaxoPlenty#1337 )
 
 Features:
 
