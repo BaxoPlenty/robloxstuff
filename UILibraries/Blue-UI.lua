@@ -301,6 +301,7 @@ function Section:AddCheckbox(Alignment, Name, DefaultValue, Callback)
   Label.Position = UDim2.new(0.05, 0, 0, 0)
   Label.Size = UDim2.new(0.85, 0, 1, 0)
   Label.ZIndex = 2
+  Label.TextXAlignment = Enum.TextXAlignment.Left
 
   local Hovered = false
   local Toggled = DefaultValue
