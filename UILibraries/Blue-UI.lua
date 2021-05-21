@@ -173,6 +173,10 @@ end
 -- <Section> Tab:AddSection(Name)
 
 function Tab:AddSection(Name)
+  if #self.Sections == 3 then
+    return
+  end
+
   local SectionInstance = Instance.new("Frame", self.SectionsHolder)
 
   SectionInstance.BackgroundTransparency = 1
@@ -200,6 +204,8 @@ function Tab:AddSection(Name)
   Click.ZIndex = 2
 
   local NewSection = setmetatable({ SectionName = Name, SectionInstance = SectionInstance }, Section)
+
+  self.Sections[Name] = NewSection
 
   if self.CurrentSection == nil then
     self:SelectSection(NewSection)
@@ -275,7 +281,6 @@ end
 
 function Window:AddTab(TabName, TabIcon)
   if #self.Tabs == 6 then
-    warn("Reached the total of 6 Tabs.")
     return
   end
 
@@ -344,7 +349,7 @@ function Window:AddTab(TabName, TabIcon)
   Components.Size = UDim2.new(1, 0, 0.875, 0)
   Components.Position = UDim2.new(0, 0, 0.125, 0)
 
-  local NewTab = setmetatable({ Window = self, ActiveSection = nil, TabContent = Content, TabInstance = Holder, ComponentsHolder = Components, SectionsHolder = SectionsHolder }, Tab)
+  local NewTab = setmetatable({ Window = self, ActiveSection = nil, TabContent = Content, TabInstance = Holder, ComponentsHolder = Components, SectionsHolder = SectionsHolder, Sections = {} }, Tab)
 
   if self:GetCurrentTab() == nil then
     self:SelectTab(NewTab)
