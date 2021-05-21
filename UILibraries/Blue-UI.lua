@@ -194,7 +194,36 @@ function Section:AddSpacer(Alignment)
   ComponentFrame.Name = "Spacer"
 end
 
--- Section:AddTextbox(Alignment, Name, Callback)
+-- Section:AddLabel(Alignment, Name)
+
+function Section:AddLabel(Alignment, Name)
+  local AlignFrame = self.ComponentsHolder[Alignment]
+
+  if self.ComponentCount[Alignment] == 16 then
+    return
+  end
+
+  self.ComponentCount[Alignment] += 1
+
+  local ComponentFrame = Instance.new("Frame", AlignFrame)
+
+  ComponentFrame.BackgroundTransparency = 1
+  ComponentFrame.BorderSizePixel = 0
+  ComponentFrame.Name = "Component"
+
+  local Label = Instance.new("TextLabel", ComponentFrame)
+
+  Label.BackgroundTransparency = 1
+  Label.Font = Enum.Font.SourceSansBold
+  Label.TextColor3 = Theme.Label.Active
+  Label.TextSize = 14
+  Label.Text = Name
+  Label.Name = "Label"
+  Label.Size = UDim2.new(1, 0, 1, 0)
+  Label.ZIndex = 2
+end
+
+-- Section:AddTextbox(Alignment, Name, Placeholder, DefaultText, Callback)
 
 function Section:AddTextbox(Alignment, Name, Placeholder, DefaultText, Callback)
   local AlignFrame = self.ComponentsHolder[Alignment]
